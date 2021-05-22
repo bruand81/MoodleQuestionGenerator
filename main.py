@@ -12,6 +12,7 @@ import os
 # @click.group(invoke_without_command=True)
 # @click.pass_context
 @click.group()
+@click.pass_context
 def main(ctx):
     """
     Programma per la generazione di quiz Moodle per il corso di Fondamenti di Informatica
