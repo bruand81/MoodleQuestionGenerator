@@ -9,14 +9,16 @@ import moodle_xqg.qbank.common as mxqg_common
 import os
 
 
-@click.group(invoke_without_command=True)
-@click.pass_context
+# @click.group(invoke_without_command=True)
+# @click.pass_context
+@click.group()
 def main(ctx):
     """
     Programma per la generazione di quiz Moodle per il corso di Fondamenti di Informatica
     """
-    if ctx.invoked_subcommand is None:
-        click.echo('I was invoked without subcommand')
+    # if ctx.invoked_subcommand is None:
+    #     click.echo('I was invoked without subcommand')
+    pass
 
 
 @main.command("c2decimale", short_help="Da complemento a 2 a decimale",
