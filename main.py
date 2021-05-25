@@ -3,7 +3,8 @@ from typing import Union
 import click
 
 from BooleanFunction import BooleanFunction
-from TwoComplement import BinaryConversion, TwoComplementToDecimal, DecimalToTwoComplement
+from TwoComplement import BinaryConversion, TwoComplementToDecimal, DecimalToTwoComplement, BinaryToDecimal, \
+    DecimalToBinary
 import moodle_xqg.core as mxqg
 import moodle_xqg.qbank.common as mxqg_common
 import os
@@ -60,6 +61,44 @@ def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: st
                      size=size)
 
 
+@main.command("binariodecimale", short_help="Da binario a decimale",
+              help="Comando per la generazione di quiz del tipo "
+                   "da binario a decimale")
+@click.option('-f', '--file_name', default=None, show_default=True, prompt="Inserire il nome del file di destinazione",
+              prompt_required=False)
+@click.option('-d', '--output_dir', default=None, show_default=True,
+              prompt="Inserire il nome della directory di destinazione", prompt_required=False)
+@click.option('-c', '--quiz_category', default="Da binario a decimale", show_default=True)
+@click.option('-s', '--size', type=int, default=50, help="Numero di domande generato", show_default=True,
+              prompt="Inserire il numero di domande da generare")
+def binary_to_decimal(file_name: str, output_dir: str, quiz_category: str, size: int):
+    # click.echo("2c2d called")
+    tctd = BinaryToDecimal()
+    tctd.bit_number = 7
+    output = "data/binario_a_decimale.xml"
+    generate_quizzes(tctd, category=quiz_category, file_name=file_name, output_dir=output_dir, default_outpath=output,
+                     size=size)
+
+
+@main.command("decimalebinario", short_help="Da decimale a binario",
+              help="Comando per la generazione di quiz del tipo "
+                   "da decimale a binario")
+@click.option('-f', '--file_name', default=None, show_default=True, prompt="Inserire il nome del file di destinazione",
+              prompt_required=False)
+@click.option('-d', '--output_dir', default=None, show_default=True,
+              prompt="Inserire il nome della directory di destinazione", prompt_required=False)
+@click.option('-c', '--quiz_category', default="Da decimale a binario", show_default=True)
+@click.option('-s', '--size', type=int, default=50, help="Numero di domande generato", show_default=True,
+              prompt="Inserire il numero di domande da generare")
+def decimal_to_binary(file_name: str, output_dir: str, quiz_category: str, size: int):
+    # click.echo("d22c called")
+    tdtc = DecimalToBinary()
+    tdtc.bit_number = 7
+    output = "data/decimale_a_binario.xml"
+    generate_quizzes(tdtc, category=quiz_category, file_name=file_name, output_dir=output_dir, default_outpath=output,
+                     size=size)
+
+
 @main.command("funzioni", short_help="Funzioni booleane", help="Comando per la generazione di quiz del tipo "
                                                                "conversione da tavola di verità a decimale")
 @click.option('-f', '--file_name', default=None, show_default=True, prompt="Inserire il nome del file di destinazione",
@@ -69,7 +108,7 @@ def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: st
 @click.option('-c', '--quiz_category', default="Funzioni booleane", show_default=True)
 @click.option('-s', '--size', type=int, default=50, help="Numero di domande generato", show_default=True,
               prompt="Inserire il numero di domande da generare")
-def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: str, size: int):
+def funzioni(file_name: str, output_dir: str, quiz_category: str, size: int):
     # click.echo("d22c called")
     bf = BooleanFunction()
     bf.n = 4
