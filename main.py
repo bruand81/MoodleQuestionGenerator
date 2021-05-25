@@ -74,7 +74,7 @@ def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: st
 def binary_to_decimal(file_name: str, output_dir: str, quiz_category: str, size: int):
     # click.echo("2c2d called")
     tctd = BinaryToDecimal()
-    tctd.bit_number = 7
+    tctd.bit_number = 5
     output = "data/binario_a_decimale.xml"
     generate_quizzes(tctd, category=quiz_category, file_name=file_name, output_dir=output_dir, default_outpath=output,
                      size=size)
@@ -93,7 +93,7 @@ def binary_to_decimal(file_name: str, output_dir: str, quiz_category: str, size:
 def decimal_to_binary(file_name: str, output_dir: str, quiz_category: str, size: int):
     # click.echo("d22c called")
     tdtc = DecimalToBinary()
-    tdtc.bit_number = 7
+    tdtc.bit_number = 5
     output = "data/decimale_a_binario.xml"
     generate_quizzes(tdtc, category=quiz_category, file_name=file_name, output_dir=output_dir, default_outpath=output,
                      size=size)
