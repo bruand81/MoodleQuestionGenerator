@@ -25,17 +25,19 @@ def main(ctx):
 @main.command("c2decimale", short_help="Da complemento a 2 a decimale",
               help="Comando per la generazione di quiz del tipo "
                    "da complemento a 2 a decimale")
-@click.option('-f', '--file_name', default=None, show_default=True, prompt="Inserire il nome del file di destinazione",
+@click.option('-f', '--file_name', default="c2decimale.xml", show_default=True, prompt="Inserire il nome del file di destinazione",
               prompt_required=False)
 @click.option('-d', '--output_dir', default=None, show_default=True,
               prompt="Inserire il nome della directory di destinazione", prompt_required=False)
 @click.option('-c', '--quiz_category', default="Da complemento a 2 a decimale", show_default=True)
-@click.option('-s', '--size', type=int, default=50, help="Numero di domande generato", show_default=True,
+@click.option('-s', '--size', type=int, default=200, help="Numero di domande generato", show_default=True,
               prompt="Inserire il numero di domande da generare")
-def two_complement_to_decimal(file_name: str, output_dir: str, quiz_category: str, size: int):
+@click.option('-b', '--num_bit', type=int, default=8, help="Numero di domande generato", show_default=True,
+              prompt="Inserire il numero di bit delle risposte")
+def two_complement_to_decimal(file_name: str, output_dir: str, quiz_category: str, size: int, num_bit:int):
     # click.echo("2c2d called")
     tctd = TwoComplementToDecimal()
-    tctd.bit_number = 7
+    tctd.bit_number = num_bit
     output = "data/complemento_a_due_a_decimale.xml"
     generate_quizzes(tctd, category=quiz_category, file_name=file_name, output_dir=output_dir, default_outpath=output,
                      size=size)
@@ -44,17 +46,20 @@ def two_complement_to_decimal(file_name: str, output_dir: str, quiz_category: st
 @main.command("decimalec2", short_help="Da decimale a complemento a 2",
               help="Comando per la generazione di quiz del tipo "
                    "da decimale a complemento a 2")
-@click.option('-f', '--file_name', default=None, show_default=True, prompt="Inserire il nome del file di destinazione",
+@click.option('-f', '--file_name', default="decimalec2.xml", show_default=True, prompt="Inserire il nome del file di destinazione",
               prompt_required=False)
 @click.option('-d', '--output_dir', default=None, show_default=True,
               prompt="Inserire il nome della directory di destinazione", prompt_required=False)
 @click.option('-c', '--quiz_category', default="Da decimale a complemento a 2", show_default=True)
-@click.option('-s', '--size', type=int, default=50, help="Numero di domande generato", show_default=True,
+@click.option('-s', '--size', type=int, default=200, help="Numero di domande generato", show_default=True,
               prompt="Inserire il numero di domande da generare")
-def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: str, size: int):
+@click.option('-b', '--num_bit', type=int, default=8, help="Numero di domande generato", show_default=True,
+              prompt="Inserire il numero di bit delle risposte")
+def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: str, size: int, num_bit:int):
     # click.echo("d22c called")
     tdtc = DecimalToTwoComplement()
-    tdtc.bit_number = 7
+    tdtc.bit_number = num_bit
+
     output = "data/decimale_a_complemento_a_due.xml"
     generate_quizzes(tdtc, category=quiz_category, file_name=file_name, output_dir=output_dir, default_outpath=output,
                      size=size)
@@ -62,12 +67,12 @@ def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: st
 
 @main.command("funzioni", short_help="Funzioni booleane", help="Comando per la generazione di quiz del tipo "
                                                                "conversione da tavola di verità a decimale")
-@click.option('-f', '--file_name', default=None, show_default=True, prompt="Inserire il nome del file di destinazione",
+@click.option('-f', '--file_name', default="funzioni.xml", show_default=True, prompt="Inserire il nome del file di destinazione",
               prompt_required=False)
 @click.option('-d', '--output_dir', default=None, show_default=True,
               prompt="Inserire il nome della directory di destinazione", prompt_required=False)
 @click.option('-c', '--quiz_category', default="Funzioni booleane", show_default=True)
-@click.option('-s', '--size', type=int, default=50, help="Numero di domande generato", show_default=True,
+@click.option('-s', '--size', type=int, default=200, help="Numero di domande generato", show_default=True,
               prompt="Inserire il numero di domande da generare")
 def decimal_to_two_complement(file_name: str, output_dir: str, quiz_category: str, size: int):
     # click.echo("d22c called")
@@ -92,7 +97,7 @@ def generate_quizzes(quiz_generator: mxqg.Question, category: str, file_name: st
     tctd_quizzes = mxqg.generate(quiz_generator,
                                  category=category,
                                  size=size)
-    tctd_quizzes.save(outpath)
+    tctd_quizzes.save(outpath, show_quiz_number_adminonly=True, show_quiz_number=False)
 
 
 if __name__ == '__main__':

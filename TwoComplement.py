@@ -1,6 +1,11 @@
 import moodle_xqg.core as mxqg
 import moodle_xqg.qbank.common as mxqg_common
 import random
+import time
+
+
+def current_milli_time():
+    return round(time.time() * 1000)
 
 
 class BinaryConversion:
@@ -59,12 +64,15 @@ class BinaryConversion:
 
 class TwoComplementToDecimal(mxqg.Question):
     bit_number = 8
+    max_repetition = 8
 
     def question_generate(self, _quiz_number=0):
         quiz = mxqg.Quiz(name='Da complemento a 2 a decimale', quiz_number=_quiz_number, lang='it')
         # generates a quiz data
         quiz.data = ["".join(["1"] + [f"{random.choice([0, 1])}" for i in range(self.bit_number - 1)])]
-        quiz.quiz_identifier = hash(quiz.data[0])
+        qid = f"{quiz.data[0]}_{current_milli_time()}"
+        # print(qid)
+        quiz.quiz_identifier = hash(qid)
 
         correct_answer = f"{BinaryConversion.c2binary_to_decimal(quiz.data[0])}"
         quiz.data.append(correct_answer)
@@ -107,13 +115,17 @@ class TwoComplementToDecimal(mxqg.Question):
 
 class DecimalToTwoComplement(mxqg.Question):
     bit_number = 8
+    max_repetition = 8
 
     def question_generate(self, _quiz_number=0):
+        global questions
         quiz = mxqg.Quiz(name='Da decimale a complemento a 2', quiz_number=_quiz_number, lang='it')
         # generates a quiz data
         target_value = random.randint(-1 * (pow(2, self.bit_number - 1)-1), -1)
         quiz.data = [f"{target_value}"]
-        quiz.quiz_identifier = hash(quiz.data[0])
+        qid = f"{quiz.data[0]}_{current_milli_time()}"
+        # print(qid)
+        quiz.quiz_identifier = hash(qid)
         correct_answer = BinaryConversion.decimal_to_c2binary(target_value, self.bit_number)
         quiz.data.append(correct_answer)
         return quiz
